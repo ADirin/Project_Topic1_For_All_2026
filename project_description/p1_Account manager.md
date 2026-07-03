@@ -1031,5 +1031,5 @@ public class HealthCheck {
 - Final project demo video
 - Performance testing results
 ### 📚 Documentation Requirements
-📖 Developer guide with setup instructions
-📖 User guide with screenshots
+- 📖 Developer guide with setup instructions
+- 📖 User guide with screenshots
