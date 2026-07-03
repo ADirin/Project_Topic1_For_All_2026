@@ -586,48 +586,54 @@ agent any
         }
     }
 }
-📦 Sprint 2 Deliverables
-Testing
-Complete JUnit test suite
-Mockito mocks for database testing
-Test coverage reports (80%+)
-Integration tests
-Performance tests
-CI/CD
-Jenkins pipeline configuration
-Automated test execution
-Code quality gates
-Email notifications
-Artifact storage
-Documentation
-Testing strategy document
-Coverage report analysis
-Jenkins setup guide
-Continuous integration guide
-🔧 Sprint 3: Jenkins CI/CD Implementation (Weeks 5-6)
-Sprint Goal
+### 📦 Sprint 2 Deliverables
+### Testing
+- Complete JUnit test suite
+- Mockito mocks for database testing
+- Test coverage reports (80%+)
+- Integration tests
+- Performance tests
+
+#### CI/CD
+- Jenkins pipeline configuration
+- Automated test execution
+- Code quality gates
+- Email notifications
+- Artifact storage
+
+#### Documentation
+- Testing strategy document
+- Coverage report analysis
+- Jenkins setup guide
+- Continuous integration guide
+
+## 🔧 Sprint 3: Jenkins CI/CD Implementation (Weeks 5-6)
+### Sprint Goal
 Implement comprehensive CI/CD pipeline with Jenkins, including code quality gates, automated builds, and deployment.
-🔄 CI/CD Pipeline Features
-Jenkins Configuration
-Multibranch Pipeline:
+
+### 🔄 CI/CD Pipeline Features
+#### Jenkins Configuration
+#### Multibranch Pipeline:
 🌿 Branch detection (main, develop, feature/*)
 🔄 Automatic build triggers on commit
 📊 Build status badges
 🔀 Pull request integration
-Pipeline Stages:
+
+#### Pipeline Stages:
 Stage	Purpose	Tools
-SCM Checkout	Git clone with credentials	Git
-Code Quality	Static code analysis	SonarQube, PMD
-Build	Compile and package	Maven
-Unit Tests	Execute test suite	JUnit, Mockito
-Integration Tests	Database integration	TestNG
-Coverage	Code coverage report	JaCoCo
-Security	Vulnerability scanning	OWASP, Snyk
-Package	Create JAR artifact	Maven
-Deploy	Deploy to staging	Scripts
-Enhanced Application Features
-Logging with Log4j2
-xml
+1. SCM Checkout	Git clone with credentials	Git
+2. Code Quality	Static code analysis	SonarQube, PMD
+3. Build	Compile and package	Maven
+4. Unit Tests	Execute test suite	JUnit, Mockito
+5. Integration Tests	Database integration	TestNG
+6. Coverage	Code coverage report	JaCoCo
+7. Security	Vulnerability scanning	OWASP, Snyk
+8. Package	Create JAR artifact	Maven
+9. Deploy	Deploy to staging	Scripts
+
+### Enhanced Application Features
+#### Logging with Log4j2
+````xml
 <!-- src/main/resources/log4j2.xml -->
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
@@ -650,8 +656,10 @@ xml
         </Root>
     </Loggers>
 </Configuration>
-Configuration Management
-properties
+````
+#### Configuration Management
+
+````properties
 # src/main/resources/application.properties
 # Database Configuration
 db.host=localhost
@@ -670,35 +678,41 @@ email.password=emailpassword
 Logging
 log.level=INFO
 log.file=logs/application.log
-Monitoring & Error Tracking
-📊 Application health checks
-📈 Performance metrics with Micrometer
-🔍 Error tracking with Sentry
-📉 Custom dashboard (Grafana)
-📦 Sprint 3 Deliverables
-CI/CD
-Complete Jenkins pipeline
-Automated build and deployment
-Code quality gates
-Email notifications
-Build status badges
-Monitoring
-Application logging setup
-Performance monitoring
-Error tracking
-Health checks
-Documentation
-CI/CD pipeline documentation
-Deployment guide
-Troubleshooting guide
-SLA/SLO documentation
-🐳 Sprint 4: Docker & Xming (Weeks 7-8)
-Sprint Goal
+````
+
+#### Monitoring & Error Tracking
+- 📊 Application health checks
+- 📈 Performance metrics with Micrometer
+- 🔍 Error tracking with Sentry
+- 📉 Custom dashboard (Grafana)
+
+### 📦 Sprint 3 Deliverables
+#### CI/CD
+- Complete Jenkins pipeline
+- Automated build and deployment
+- Code quality gates
+- Email notifications
+- Build status badges
+
+#### Monitoring
+- Application logging setup
+- Performance monitoring
+- Error tracking
+- Health checks
+
+#### Documentation
+- CI/CD pipeline documentation
+- Deployment guide
+- Troubleshooting guide
+- SLA/SLO documentation
+####🐳 Sprint 4: Docker & Xming (Weeks 7-8)
+### Sprint Goal
 Containerize the application with Docker, implement Docker Compose for orchestration, and enable GUI display using Xming.
-🐳 Docker Implementation
-Containerization Strategy
-Multi-stage Docker Build
-dockerfile
+
+### 🐳 Docker Implementation
+#### Containerization Strategy
+#### Multi-stage Docker Build
+````dockerfile
 docker/Dockerfile
 Stage 1: Build
 FROM maven:3.8.6-openjdk-17 AS build
@@ -739,8 +753,10 @@ Expose ports
 EXPOSE 5900
 Start application
 ENTRYPOINT ["java", "-jar", "app.jar"]
-Docker Compose Orchestration
-yaml
+````
+### Docker Compose Orchestration
+
+````yaml
 docker/docker-compose.yml
 version: '3.8'
 services:
@@ -829,9 +845,10 @@ driver: bridge
 ipam:
 config:
 - subnet: 172.28.0.0/16
-🖥 Xming Integration
-Windows with Xming
-bash
+````
+### 🖥 Xming Integration
+#### Windows with Xming
+````bash
 #!/bin/bash
 scripts/run-gui-windows.sh
 echo "🚀 Starting Account Application with Xming..."
@@ -865,8 +882,10 @@ docker run -it
 account-app:latest   
 java -jar app.jar
 echo "✅ Application closed"
-Linux with X11
-bash
+````
+
+#### Linux with X11
+````bash
 #!/bin/bash
 scripts/run-gui-linux.sh
 echo "🚀 Starting Account Application on Linux..."
@@ -896,8 +915,10 @@ Revoke permissions
 echo "🔄 Revoking X server permissions..."
 xhost -local:docker
 echo "✅ Application closed"
-Mac with XQuartz
-bash
+````
+
+#### Mac with XQuartz
+````bash
 #!/bin/bash
 scripts/run-gui-mac.sh
 echo "🚀 Starting Account Application on Mac..."
@@ -934,8 +955,9 @@ Revoke permissions
 echo "🔄 Revoking X server permissions..."
 xhost -localhost
 echo "✅ Application closed"
-Environment Variables
-bash
+````
+#### Environment Variables
+````bash
 .env - Environment configuration
 Database
 DB_ROOT_PASSWORD=root123
@@ -951,8 +973,10 @@ BCRYPT_STRENGTH=10
 JWT_SECRET=mySuperSecretKey123!
 Display
 DISPLAY=host.docker.internal:0.0
-🏥 Health Check
-java
+
+````
+#### 🏥 Health Check
+````java
 // src/main/java/com/accountapp/HealthCheck.java
 package com.accountapp;
 import com.accountapp.model.DatabaseConnection;
@@ -986,54 +1010,26 @@ public class HealthCheck {
         }
     }
 }
-📦 Sprint 4 Deliverables
-Docker
-Dockerfile with multi-stage build
-Docker Compose configuration
-Volume management for data persistence
-Network configuration
-Health checks
-Resource limits
-Xming Configuration
-Xming setup instructions
-Display environment variables
-Cross-platform support (Windows, Linux, Mac)
-GUI rendering through X11 forwarding
-Documentation
-Docker deployment guide
-Xming setup guide
-Troubleshooting guide
-Final project demo video
-Performance testing results
-⚡ Non-Functional Requirements
-Performance
-Metric	Target
-Application Load Time	≤ 2 seconds
-Database Query Time	≤ 100ms
-UI Responsiveness	< 50ms
-Memory Usage	< 256MB
-CPU Usage	< 50%
-🔒 Security
-Security Measures
-🔐 Password hashing with BCrypt (strength 10)
-🛡 SQL injection prevention with prepared statements
-✅ Input validation on both client and server
-🔑 Environment variables for sensitive data
-🔒 HTTPS support for web deployment
-🛡 JWT token authentication
-🔐 SSL/TLS encryption for database connections
-📈 Scalability
-🐳 Docker Swarm/Kubernetes ready
-🔄 Horizontal scaling support
-⚖️ Load balancing configuration
-📊 Read replicas for database
-🚀 Auto-scaling policies
-📊 Monitoring & Logging
-📝 Centralized logging with ELK stack
-📈 Performance metrics with Prometheus
-📉 Grafana dashboards for visualization
-🏥 Application health endpoints
-🔍 Distributed tracing with Jaeger
-📚 Documentation Requirements
+````
+### 📦 Sprint 4 Deliverables
+#### Docker
+- Dockerfile with multi-stage build
+- Docker Compose configuration
+- Volume management for data persistence
+- Network configuration
+- Health checks
+- Resource limits
+#### Xming Configuration
+- Xming setup instructions
+- Display environment variables
+- Cross-platform support (Windows, Linux, Mac)
+- GUI rendering through X11 forwarding
+#### Documentation
+- Docker deployment guide
+- Xming setup guide
+- Troubleshooting guide
+- Final project demo video
+- Performance testing results
+### 📚 Documentation Requirements
 📖 Developer guide with setup instructions
 📖 User guide with screenshots
