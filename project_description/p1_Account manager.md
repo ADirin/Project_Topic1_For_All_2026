@@ -295,21 +295,6 @@ public class UserTest {
         assertEquals("John", user.getFirstName());
         assertEquals("john@example.com", user.getEmail());
     }
-}
-```
-java
-@ExtendWith(MockitoExtension.class)
-public class UserTest {
-    @Test
-    void testUserCreation_ValidData_Success() {
-        User user = new User("Doe", "John", "john@example.com", 
-                            "1234567890", "johndoe", "password");
-        
-        assertNotNull(user);
-        assertEquals("Doe", user.getLastName());
-        assertEquals("John", user.getFirstName());
-        assertEquals("john@example.com", user.getEmail());
-    }
     
     @Test
     void testUser_InvalidEmail_ThrowsException() {
@@ -319,7 +304,8 @@ public class UserTest {
         });
     }
 }
-2. Service Layer Tests
+````
+#### 2. Service Layer Tests
 java
 @ExtendWith(MockitoExtension.class)
 public class ValidationServiceTest {
@@ -355,7 +341,7 @@ public class ValidationServiceTest {
         assertTrue(strength >= 4);
     }
 }
-3. DAO Layer Tests
+#### 3. DAO Layer Tests
 java
 @ExtendWith(MockitoExtension.class)
 public class UserDAOTest {
@@ -409,7 +395,7 @@ public class UserDAOTest {
         });
     }
 }
-4. Integration Tests
+#### 4. Integration Tests
 java
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DatabaseIntegrationTest {
@@ -463,8 +449,8 @@ public class DatabaseIntegrationTest {
         assertNull(deletedUser);
     }
 }
-📊 JaCoCo Code Coverage
-Coverage Targets
+## 📊 JaCoCo Code Coverage
+### Coverage Targets
 Metric	Target
 Line Coverage	≥ 80%
 Branch Coverage	≥ 70%
