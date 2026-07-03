@@ -1,39 +1,44 @@
+---
+title: Account App DevOps Project
+tags:
+java
+javafx
+fxml
+mariadb
+maven
+junit5
+mockito
+jacoco
+sonarqube
+jenkins
+docker
+docker-compose
+xming
+ci-cd
+devops
+documentation
+---
 📋 Table of Contents
 Project Overview
-
 Technology Stack
-
 Project Structure
-
 Sprint 1: Database Implementation
-
 Sprint 2: Unit Testing & Coverage
-
 Sprint 3: Jenkins CI/CD
-
 Sprint 4: Docker & Xming
-
 Non-Functional Requirements
-
 Acceptance Criteria
-
 Learning Outcomes
-
 Grading
-
 Resources
-
 
 📖 Project Overview
 Duration
 8 Weeks (4 Sprints, 2 Weeks Each)
-
 Goal
 Build a complete DevOps pipeline for a JavaFX FXML application with full CI/CD integration, containerization, and GUI deployment.
-
 Team
 Size: 3-4 members per group
-
 🛠 Technology Stack
 Core Technologies
 Technology	Version	Purpose
@@ -124,15 +129,14 @@ account-app/
 │   └── Jenkinsfile                            # Pipeline definition
 │
 └── scripts/                                    # Utility scripts
-    ├── setup-db.sh                            # Database setup
-    ├── run-app.sh                             # Run application
-    ├── run-gui-windows.sh                     # Windows GUI launcher
-    ├── run-gui-linux.sh                       # Linux GUI launcher
-    └── run-gui-mac.sh                         # Mac GUI launcher
+├── setup-db.sh                            # Database setup
+├── run-app.sh                             # Run application
+├── run-gui-windows.sh                     # Windows GUI launcher
+├── run-gui-linux.sh                       # Linux GUI launcher
+└── run-gui-mac.sh                         # Mac GUI launcher
 🏗 Sprint 1: Database Implementation (Weeks 1-2)
 Sprint Goal
 Implement the core application with JavaFX FXML interface and MariaDB database integration.
-
 ✨ Application Features
 User Interface (FXML)
 Form Fields
@@ -146,19 +150,12 @@ Password	Password Field	Required, min 6 chars
 Re-type Password	Password Field	Must match password
 UI Features
 ✅ Real-time validation with visual feedback
-
 ✅ Password strength indicator (Weak/Medium/Strong)
-
 ✅ Email format validation on the fly
-
 ✅ Tooltips with validation hints
-
 ✅ Error labels appearing next to invalid fields
-
 ✅ Responsive layout
-
 ✅ Keyboard shortcuts (Enter to submit, Esc to cancel)
-
 Buttons
 Button	Function
 Create Account	Submits the form
@@ -168,50 +165,41 @@ Cancel	Closes the application
 Schema Design
 sql
 -- database/schema.sql
-
 CREATE DATABASE accountdb;
 USE accountdb;
-
 -- Users table
 CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    last_name VARCHAR(50) NOT NULL,
-    first_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    phone VARCHAR(20) NOT NULL,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    is_active BOOLEAN DEFAULT TRUE,
-    last_login TIMESTAMP NULL
+id INT AUTO_INCREMENT PRIMARY KEY,
+last_name VARCHAR(50) NOT NULL,
+first_name VARCHAR(50) NOT NULL,
+email VARCHAR(100) UNIQUE NOT NULL,
+phone VARCHAR(20) NOT NULL,
+username VARCHAR(50) UNIQUE NOT NULL,
+password_hash VARCHAR(255) NOT NULL,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+is_active BOOLEAN DEFAULT TRUE,
+last_login TIMESTAMP NULL
 );
-
 -- Audit log table
 CREATE TABLE audit_log (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    action VARCHAR(50) NOT NULL,
-    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    details TEXT,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+id INT AUTO_INCREMENT PRIMARY KEY,
+user_id INT,
+action VARCHAR(50) NOT NULL,
+timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+details TEXT,
+FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
-
 -- Indexes for performance
 CREATE INDEX idx_email ON users(email);
 CREATE INDEX idx_username ON users(username);
 CREATE INDEX idx_created_at ON users(created_at);
 Database Features
 🔌 Connection pooling with HikariCP
-
 🛡 Prepared statements for SQL injection prevention
-
 💾 Transaction management for atomic operations
-
 📝 Audit logging for all user operations
-
 🔄 Migration scripts for version control
-
 DAO Operations
 Method	Description
 createUser(User user)	Insert new user
@@ -225,44 +213,29 @@ authenticateUser(String username, String password)	User login
 📦 Sprint 1 Deliverables
 Code
 Complete FXML UI with all required fields
-
 JavaFX controller implementation
-
 Database schema and migration scripts
-
 DAO implementation with all CRUD operations
-
 Database connection utility
-
 Documentation
 Database schema diagram
-
 Setup instructions
-
 User guide for the application
-
 API documentation for DAO layer
-
 Testing
 Manual testing of all form validations
-
 Database connection testing
-
 Basic CRUD operation testing
-
 🧪 Sprint 2: Unit Testing & Code Coverage (Weeks 3-4)
 Sprint Goal
 Implement comprehensive unit testing, achieve 80%+ code coverage, and set up the Jenkins pipeline.
-
 🧬 Testing Implementation
 Unit Testing with JUnit 5
 Test Categories
-1. Model Tests
-
+Model Tests
 java
 @ExtendWith(MockitoExtension.class)
 public class UserTest {
-    
     @Test
     void testUserCreation_ValidData_Success() {
         User user = new User("Doe", "John", "john@example.com", 
@@ -283,11 +256,9 @@ public class UserTest {
     }
 }
 2. Service Layer Tests
-
 java
 @ExtendWith(MockitoExtension.class)
 public class ValidationServiceTest {
-    
     private ValidationService validationService;
     
     @BeforeEach
@@ -321,11 +292,9 @@ public class ValidationServiceTest {
     }
 }
 3. DAO Layer Tests
-
 java
 @ExtendWith(MockitoExtension.class)
 public class UserDAOTest {
-    
     @Mock
     private DataSource mockDataSource;
     
@@ -377,11 +346,9 @@ public class UserDAOTest {
     }
 }
 4. Integration Tests
-
 java
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DatabaseIntegrationTest {
-    
     private static final String DB_URL = "jdbc:mariadb://localhost:3306/accountdb_test";
     private static final String DB_USER = "testuser";
     private static final String DB_PASSWORD = "testpass";
@@ -441,16 +408,12 @@ Class Coverage	≥ 90%
 Method Coverage	≥ 85%
 Coverage Reports
 📊 HTML report in target/site/jacoco
-
 📄 XML report for CI/CD integration
-
 📈 Dashboard with coverage trends
-
- Jenkins Pipeline Setup
+Jenkins Pipeline Setup
 Jenkinsfile
 pipeline {
-    agent any
-    
+agent any
     tools {
         maven 'maven-3.8.6'
         jdk 'openjdk-17'
@@ -573,67 +536,45 @@ pipeline {
         }
     }
 }
-
 📦 Sprint 2 Deliverables
 Testing
 Complete JUnit test suite
-
 Mockito mocks for database testing
-
 Test coverage reports (80%+)
-
 Integration tests
-
 Performance tests
-
 CI/CD
 Jenkins pipeline configuration
-
 Automated test execution
-
 Code quality gates
-
 Email notifications
-
 Artifact storage
-
 Documentation
 Testing strategy document
-
 Coverage report analysis
-
 Jenkins setup guide
-
 Continuous integration guide
-
 🔧 Sprint 3: Jenkins CI/CD Implementation (Weeks 5-6)
 Sprint Goal
 Implement comprehensive CI/CD pipeline with Jenkins, including code quality gates, automated builds, and deployment.
-
 🔄 CI/CD Pipeline Features
 Jenkins Configuration
 Multibranch Pipeline:
-
 🌿 Branch detection (main, develop, feature/*)
-
 🔄 Automatic build triggers on commit
-
 📊 Build status badges
-
 🔀 Pull request integration
-
 Pipeline Stages:
-
 Stage	Purpose	Tools
-1. SCM Checkout	Git clone with credentials	Git
-2. Code Quality	Static code analysis	SonarQube, PMD
-3. Build	Compile and package	Maven
-4. Unit Tests	Execute test suite	JUnit, Mockito
-5. Integration Tests	Database integration	TestNG
-6. Coverage	Code coverage report	JaCoCo
-7. Security	Vulnerability scanning	OWASP, Snyk
-8. Package	Create JAR artifact	Maven
-9. Deploy	Deploy to staging	Scripts
+SCM Checkout	Git clone with credentials	Git
+Code Quality	Static code analysis	SonarQube, PMD
+Build	Compile and package	Maven
+Unit Tests	Execute test suite	JUnit, Mockito
+Integration Tests	Database integration	TestNG
+Coverage	Code coverage report	JaCoCo
+Security	Vulnerability scanning	OWASP, Snyk
+Package	Create JAR artifact	Maven
+Deploy	Deploy to staging	Scripts
 Enhanced Application Features
 Logging with Log4j2
 xml
@@ -668,376 +609,305 @@ db.port=3306
 db.name=accountdb
 db.user=appuser
 db.password=app123
-
-# Security
+Security
 bcrypt.strength=10
 jwt.secret=mySecretKey
-
-# Email Configuration
+Email Configuration
 email.smtp.host=smtp.gmail.com
 email.smtp.port=587
 email.username=no-reply@example.com
 email.password=emailpassword
-
-# Logging
+Logging
 log.level=INFO
 log.file=logs/application.log
 Monitoring & Error Tracking
 📊 Application health checks
-
 📈 Performance metrics with Micrometer
-
 🔍 Error tracking with Sentry
-
 📉 Custom dashboard (Grafana)
-
 📦 Sprint 3 Deliverables
 CI/CD
 Complete Jenkins pipeline
-
 Automated build and deployment
-
 Code quality gates
-
 Email notifications
-
 Build status badges
-
 Monitoring
 Application logging setup
-
 Performance monitoring
-
 Error tracking
-
 Health checks
-
 Documentation
 CI/CD pipeline documentation
-
 Deployment guide
-
 Troubleshooting guide
-
 SLA/SLO documentation
-
 🐳 Sprint 4: Docker & Xming (Weeks 7-8)
 Sprint Goal
 Containerize the application with Docker, implement Docker Compose for orchestration, and enable GUI display using Xming.
-
 🐳 Docker Implementation
 Containerization Strategy
 Multi-stage Docker Build
 dockerfile
-# docker/Dockerfile
-
-# Stage 1: Build
+docker/Dockerfile
+Stage 1: Build
 FROM maven:3.8.6-openjdk-17 AS build
 LABEL maintainer="devops-team@example.com"
 LABEL version="1.0.0"
-
 WORKDIR /app
-
-# Copy pom.xml and download dependencies
+Copy pom.xml and download dependencies
 COPY pom.xml .
 RUN mvn dependency:go-offline
-
-# Copy source and build
+Copy source and build
 COPY src ./src
 RUN mvn clean package -DskipTests
-
-# Stage 2: Runtime
+Stage 2: Runtime
 FROM openjdk:17-jdk-slim
 LABEL maintainer="devops-team@example.com"
 LABEL version="1.0.0"
-
 WORKDIR /app
-
-# Install X11 dependencies for GUI
-RUN apt-get update && apt-get install -y \
-    libx11-6 \
-    libxext6 \
-    libxrender1 \
-    libxtst6 \
-    libxi6 \
-    libxcb1 \
-    libx11-xcb1 \
-    && rm -rf /var/lib/apt/lists/*
-
-# Create non-root user
+Install X11 dependencies for GUI
+RUN apt-get update && apt-get install -y   
+libx11-6   
+libxext6   
+libxrender1   
+libxtst6   
+libxi6   
+libxcb1   
+libx11-xcb1   
+&& rm -rf /var/lib/apt/lists/*
+Create non-root user
 RUN groupadd -r appuser && useradd -m -r -g appuser appuser
-
-# Copy JAR from build stage
+Copy JAR from build stage
 COPY --from=build /app/target/account-app-*.jar app.jar
-
-# Switch to non-root user
+Switch to non-root user
 USER appuser
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s \
-    CMD java -cp app.jar com.accountapp.HealthCheck || exit 1
-
-# Expose ports
+Health check
+HEALTHCHECK --interval=30s --timeout=3s   
+CMD java -cp app.jar com.accountapp.HealthCheck || exit 1
+Expose ports
 EXPOSE 5900
-
-# Start application
+Start application
 ENTRYPOINT ["java", "-jar", "app.jar"]
 Docker Compose Orchestration
 yaml
-# docker/docker-compose.yml
+docker/docker-compose.yml
 version: '3.8'
-
 services:
-  # Database Service
-  mariadb:
-    image: mariadb:10.11
-    container_name: account-db
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root123}
-      MYSQL_DATABASE: ${DB_NAME:-accountdb}
-      MYSQL_USER: ${DB_USER:-appuser}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-app123}
-    volumes:
-      - mariadb_data:/var/lib/mysql
-      - ./mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
-    ports:
-      - "3306:3306"
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-        reservations:
-          memory: 256M
-
-  # Application Service
-  app:
-    build: .
-    container_name: account-app
-    depends_on:
-      mariadb:
-        condition: service_healthy
-    environment:
-      DATABASE_HOST: mariadb
-      DATABASE_PORT: 3306
-      DATABASE_NAME: ${DB_NAME:-accountdb}
-      DATABASE_USER: ${DB_USER:-appuser}
-      DATABASE_PASSWORD: ${DB_PASSWORD:-app123}
-      DISPLAY: ${DISPLAY:-host.docker.internal:0}
-      JAVA_OPTS: "-Xms256m -Xmx512m"
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - ./logs:/app/logs
-      - ./config:/app/config
-    ports:
-      - "5900:5900"
-    networks:
-      - app-network
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-        reservations:
-          memory: 256M
-    restart: unless-stopped
-
-  # Jenkins Service
-  jenkins:
-    image: jenkins/jenkins:lts-jdk17
-    container_name: account-jenkins
-    environment:
-      JENKINS_OPTS: "--httpPort=8080"
-    volumes:
-      - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./jenkins/jenkins.yaml:/var/jenkins_home/jenkins.yaml
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-    networks:
-      - app-network
-    restart: unless-stopped
-
+Database Service
+mariadb:
+image: mariadb:10.11
+container_name: account-db
+environment:
+MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root123}
+MYSQL_DATABASE: ${DB_NAME:-accountdb}
+MYSQL_USER: ${DB_USER:-appuser}
+MYSQL_PASSWORD: ${DB_PASSWORD:-app123}
 volumes:
-  mariadb_data:
-    driver: local
-  jenkins_home:
-    driver: local
-
+- mariadb_data:/var/lib/mysql
+- ./mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
+- ./mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
+ports:
+- "3306:3306"
 networks:
-  app-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.28.0.0/16
+- app-network
+healthcheck:
+test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+interval: 10s
+timeout: 5s
+retries: 5
+deploy:
+resources:
+limits:
+memory: 512M
+reservations:
+memory: 256M
+Application Service
+app:
+build: .
+container_name: account-app
+depends_on:
+mariadb:
+condition: service_healthy
+environment:
+DATABASE_HOST: mariadb
+DATABASE_PORT: 3306
+DATABASE_NAME: ${DB_NAME:-accountdb}
+DATABASE_USER: ${DB_USER:-appuser}
+DATABASE_PASSWORD: ${DB_PASSWORD:-app123}
+DISPLAY: ${DISPLAY:-host.docker.internal:0}
+JAVA_OPTS: "-Xms256m -Xmx512m"
+volumes:
+- /tmp/.X11-unix:/tmp/.X11-unix
+- ./logs:/app/logs
+- ./config:/app/config
+ports:
+- "5900:5900"
+networks:
+- app-network
+deploy:
+resources:
+limits:
+memory: 512M
+reservations:
+memory: 256M
+restart: unless-stopped
+Jenkins Service
+jenkins:
+image: jenkins/jenkins:lts-jdk17
+container_name: account-jenkins
+environment:
+JENKINS_OPTS: "--httpPort=8080"
+volumes:
+- jenkins_home:/var/jenkins_home
+- /var/run/docker.sock:/var/run/docker.sock
+- ./jenkins/jenkins.yaml:/var/jenkins_home/jenkins.yaml
+ports:
+- "8080:8080"
+- "50000:50000"
+networks:
+- app-network
+restart: unless-stopped
+volumes:
+mariadb_data:
+driver: local
+jenkins_home:
+driver: local
+networks:
+app-network:
+driver: bridge
+ipam:
+config:
+- subnet: 172.28.0.0/16
 🖥 Xming Integration
 Windows with Xming
 bash
 #!/bin/bash
-# scripts/run-gui-windows.sh
-
+scripts/run-gui-windows.sh
 echo "🚀 Starting Account Application with Xming..."
-
-# Check if Xming is running
+Check if Xming is running
 if ! pslist Xming > /dev/null 2>&1; then
-    echo "❌ Xming is not running. Please start Xming first."
-    echo "   1. Download Xming from: http://www.straightrunning.com/Xming/"
-    echo "   2. Install and run Xming"
-    echo "   3. Try again"
-    exit 1
+echo "❌ Xming is not running. Please start Xming first."
+echo "   1. Download Xming from: http://www.straightrunning.com/Xming/"
+echo "   2. Install and run Xming"
+echo "   3. Try again"
+exit 1
 fi
-
 echo "✅ Xming detected"
-
-# Set DISPLAY for Windows
+Set DISPLAY for Windows
 export DISPLAY=host.docker.internal:0.0
-
-# Check Docker is running
+Check Docker is running
 if ! docker info > /dev/null 2>&1; then
-    echo "❌ Docker is not running. Please start Docker first."
-    exit 1
+echo "❌ Docker is not running. Please start Docker first."
+exit 1
 fi
-
 echo "✅ Docker detected"
-
-# Run the container with GUI support
+Run the container with GUI support
 echo "🔄 Starting container..."
-docker run -it \
-    --rm \
-    --name account-app-gui \
-    -e DISPLAY=$DISPLAY \
-    -e QT_X11_NO_MITSHM=1 \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    --network account-app_app-network \
-    --env-file .env \
-    account-app:latest \
-    java -jar app.jar
-
+docker run -it   
+--rm   
+--name account-app-gui   
+-e DISPLAY=$DISPLAY   
+-e QT_X11_NO_MITSHM=1   
+-v /tmp/.X11-unix:/tmp/.X11-unix   
+--network account-app_app-network   
+--env-file .env   
+account-app:latest   
+java -jar app.jar
 echo "✅ Application closed"
 Linux with X11
 bash
 #!/bin/bash
-# scripts/run-gui-linux.sh
-
+scripts/run-gui-linux.sh
 echo "🚀 Starting Account Application on Linux..."
-
-# Allow X server connections
+Allow X server connections
 echo "🔄 Allowing X server connections..."
 xhost +local:docker
-
-# Set DISPLAY
+Set DISPLAY
 export DISPLAY=:0
-
-# Check Docker is running
+Check Docker is running
 if ! docker info > /dev/null 2>&1; then
-    echo "❌ Docker is not running. Please start Docker first."
-    exit 1
+echo "❌ Docker is not running. Please start Docker first."
+exit 1
 fi
-
 echo "✅ Docker detected"
-
-# Run container
+Run container
 echo "🔄 Starting container..."
-docker run -it \
-    --rm \
-    --name account-app-gui \
-    -e DISPLAY=$DISPLAY \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    --network account-app_app-network \
-    --env-file .env \
-    account-app:latest \
-    java -jar app.jar
-
-# Revoke permissions
+docker run -it   
+--rm   
+--name account-app-gui   
+-e DISPLAY=$DISPLAY   
+-v /tmp/.X11-unix:/tmp/.X11-unix   
+--network account-app_app-network   
+--env-file .env   
+account-app:latest   
+java -jar app.jar
+Revoke permissions
 echo "🔄 Revoking X server permissions..."
 xhost -local:docker
-
 echo "✅ Application closed"
 Mac with XQuartz
 bash
 #!/bin/bash
-# scripts/run-gui-mac.sh
-
+scripts/run-gui-mac.sh
 echo "🚀 Starting Account Application on Mac..."
-
-# Check if XQuartz is running
+Check if XQuartz is running
 if ! ps aux | grep -v grep | grep XQuartz > /dev/null; then
-    echo "❌ XQuartz is not running."
-    echo "   Please start XQuartz from Applications/Utilities"
-    exit 1
+echo "❌ XQuartz is not running."
+echo "   Please start XQuartz from Applications/Utilities"
+exit 1
 fi
-
 echo "✅ XQuartz detected"
-
-# Allow connections from localhost
+Allow connections from localhost
 echo "🔄 Allowing X server connections..."
 xhost +localhost
-
-# Set DISPLAY
+Set DISPLAY
 export DISPLAY=docker.for.mac.localhost:0
-
-# Check Docker is running
+Check Docker is running
 if ! docker info > /dev/null 2>&1; then
-    echo "❌ Docker is not running. Please start Docker first."
-    exit 1
+echo "❌ Docker is not running. Please start Docker first."
+exit 1
 fi
-
 echo "✅ Docker detected"
-
-# Run container
+Run container
 echo "🔄 Starting container..."
-docker run -it \
-    --rm \
-    --name account-app-gui \
-    -e DISPLAY=$DISPLAY \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    --network account-app_app-network \
-    --env-file .env \
-    account-app:latest \
-    java -jar app.jar
-
-# Revoke permissions
+docker run -it   
+--rm   
+--name account-app-gui   
+-e DISPLAY=$DISPLAY   
+-v /tmp/.X11-unix:/tmp/.X11-unix   
+--network account-app_app-network   
+--env-file .env   
+account-app:latest   
+java -jar app.jar
+Revoke permissions
 echo "🔄 Revoking X server permissions..."
 xhost -localhost
-
 echo "✅ Application closed"
 Environment Variables
 bash
-# .env - Environment configuration
-# Database
+.env - Environment configuration
+Database
 DB_ROOT_PASSWORD=root123
 DB_NAME=accountdb
 DB_USER=appuser
 DB_PASSWORD=app123
-
-# Application
+Application
 APP_NAME=AccountApp
 APP_VERSION=1.0.0
 JAVA_OPTS=-Xms256m -Xmx512m
-
-# Security
+Security
 BCRYPT_STRENGTH=10
 JWT_SECRET=mySuperSecretKey123!
-
-# Display
+Display
 DISPLAY=host.docker.internal:0.0
 🏥 Health Check
 java
 // src/main/java/com/accountapp/HealthCheck.java
 package com.accountapp;
-
 import com.accountapp.model.DatabaseConnection;
 import java.sql.Connection;
-
 public class HealthCheck {
-    
     public static void main(String[] args) {
         boolean healthy = true;
         
@@ -1069,37 +939,22 @@ public class HealthCheck {
 📦 Sprint 4 Deliverables
 Docker
 Dockerfile with multi-stage build
-
 Docker Compose configuration
-
 Volume management for data persistence
-
 Network configuration
-
 Health checks
-
 Resource limits
-
 Xming Configuration
 Xming setup instructions
-
 Display environment variables
-
 Cross-platform support (Windows, Linux, Mac)
-
 GUI rendering through X11 forwarding
-
 Documentation
 Docker deployment guide
-
 Xming setup guide
-
 Troubleshooting guide
-
 Final project demo video
-
 Performance testing results
-
 ⚡ Non-Functional Requirements
 Performance
 Metric	Target
@@ -1111,43 +966,24 @@ CPU Usage	< 50%
 🔒 Security
 Security Measures
 🔐 Password hashing with BCrypt (strength 10)
-
 🛡 SQL injection prevention with prepared statements
-
 ✅ Input validation on both client and server
-
 🔑 Environment variables for sensitive data
-
 🔒 HTTPS support for web deployment
-
 🛡 JWT token authentication
-
 🔐 SSL/TLS encryption for database connections
-
 📈 Scalability
 🐳 Docker Swarm/Kubernetes ready
-
 🔄 Horizontal scaling support
-
 ⚖️ Load balancing configuration
-
 📊 Read replicas for database
-
 🚀 Auto-scaling policies
-
 📊 Monitoring & Logging
 📝 Centralized logging with ELK stack
-
 📈 Performance metrics with Prometheus
-
 📉 Grafana dashboards for visualization
-
 🏥 Application health endpoints
-
 🔍 Distributed tracing with Jaeger
-
 📚 Documentation Requirements
 📖 Developer guide with setup instructions
-
 📖 User guide with screenshots
-
