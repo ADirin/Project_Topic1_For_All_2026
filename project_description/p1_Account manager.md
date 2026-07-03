@@ -120,105 +120,183 @@ account-app/
     └── run-gui-mac.sh
 ```
 
-🏗 Sprint 1: Database Implementation (Weeks 1-2)
-Sprint Goal
-Implement the core application with JavaFX FXML interface and MariaDB database integration.
-✨ Application Features
-User Interface (FXML)
-Form Fields
-Field	Type	Validation
-Last Name	Text Field	Required, min 2 chars
-First Name	Text Field	Required, min 2 chars
-Email	Text Field	Required, valid email format
-Phone Number	Text Field	Required, valid format
-Username	Text Field	Required, min 4 chars
-Password	Password Field	Required, min 6 chars
-Re-type Password	Password Field	Must match password
-UI Features
-✅ Real-time validation with visual feedback
-✅ Password strength indicator (Weak/Medium/Strong)
-✅ Email format validation on the fly
-✅ Tooltips with validation hints
-✅ Error labels appearing next to invalid fields
-✅ Responsive layout
-✅ Keyboard shortcuts (Enter to submit, Esc to cancel)
-Buttons
-Button	Function
-Create Account	Submits the form
-Clear Fields	Resets all fields
-Cancel	Closes the application
-🗄 Database Implementation
-Schema Design
-sql
--- database/schema.sql
+# 🏗 Sprint 1: Database Implementation (Weeks 1–2)
+
+## 🎯 Sprint Goal
+
+Implement the core application with a JavaFX FXML interface and MariaDB database integration.
+
+---
+
+# ✨ Application Features
+
+## User Interface (FXML)
+
+### Form Fields
+
+| Field | Type | Validation |
+|-------|------|------------|
+| Last Name | Text Field | Required, minimum 2 characters |
+| First Name | Text Field | Required, minimum 2 characters |
+| Email | Text Field | Required, valid email format |
+| Phone Number | Text Field | Required, valid phone number |
+| Username | Text Field | Required, minimum 4 characters |
+| Password | Password Field | Required, minimum 6 characters |
+| Re-type Password | Password Field | Must match password |
+
+### UI Features
+
+- ✅ Real-time validation with visual feedback
+- ✅ Password strength indicator (Weak / Medium / Strong)
+- ✅ Email validation while typing
+- ✅ Tooltips with validation hints
+- ✅ Error labels displayed next to invalid fields
+- ✅ Responsive layout
+- ✅ Keyboard shortcuts
+  - **Enter** → Submit
+  - **Esc** → Cancel
+
+### Buttons
+
+| Button | Function |
+|---------|----------|
+| Create Account | Submit the form |
+| Clear Fields | Reset all fields |
+| Cancel | Close the application |
+
+---
+
+# 🗄 Database Implementation
+
+## Schema Design
+
+**`database/schema.sql`**
+
+```sql
 CREATE DATABASE accountdb;
 USE accountdb;
+
 -- Users table
 CREATE TABLE users (
-id INT AUTO_INCREMENT PRIMARY KEY,
-last_name VARCHAR(50) NOT NULL,
-first_name VARCHAR(50) NOT NULL,
-email VARCHAR(100) UNIQUE NOT NULL,
-phone VARCHAR(20) NOT NULL,
-username VARCHAR(50) UNIQUE NOT NULL,
-password_hash VARCHAR(255) NOT NULL,
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-is_active BOOLEAN DEFAULT TRUE,
-last_login TIMESTAMP NULL
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    last_name VARCHAR(50) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
+    last_login TIMESTAMP NULL
 );
+
 -- Audit log table
 CREATE TABLE audit_log (
-id INT AUTO_INCREMENT PRIMARY KEY,
-user_id INT,
-action VARCHAR(50) NOT NULL,
-timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-details TEXT,
-FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    action VARCHAR(50) NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    details TEXT,
+    FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE SET NULL
 );
--- Indexes for performance
+
+-- Performance indexes
 CREATE INDEX idx_email ON users(email);
 CREATE INDEX idx_username ON users(username);
 CREATE INDEX idx_created_at ON users(created_at);
-Database Features
-🔌 Connection pooling with HikariCP
-🛡 Prepared statements for SQL injection prevention
-💾 Transaction management for atomic operations
-📝 Audit logging for all user operations
-🔄 Migration scripts for version control
-DAO Operations
-Method	Description
-createUser(User user)	Insert new user
-getUserById(int id)	Retrieve user by ID
-getUserByEmail(String email)	Retrieve user by email
-getUserByUsername(String username)	Retrieve user by username
-updateUser(User user)	Update user details
-deleteUser(int id)	Soft delete user
-getAllUsers()	List all active users
-authenticateUser(String username, String password)	User login
-📦 Sprint 1 Deliverables
-Code
-Complete FXML UI with all required fields
-JavaFX controller implementation
-Database schema and migration scripts
-DAO implementation with all CRUD operations
-Database connection utility
-Documentation
-Database schema diagram
-Setup instructions
-User guide for the application
-API documentation for DAO layer
-Testing
-Manual testing of all form validations
-Database connection testing
-Basic CRUD operation testing
-🧪 Sprint 2: Unit Testing & Code Coverage (Weeks 3-4)
-Sprint Goal
-Implement comprehensive unit testing, achieve 80%+ code coverage, and set up the Jenkins pipeline.
-🧬 Testing Implementation
-Unit Testing with JUnit 5
-Test Categories
-Model Tests
+```
+
+## Database Features
+
+- 🔌 Connection pooling with **HikariCP**
+- 🛡 Prepared statements to prevent SQL injection
+- 💾 Transaction management for atomic operations
+- 📝 Audit logging for all user operations
+- 🔄 Migration scripts for version control
+
+## DAO Operations
+
+| Method | Description |
+|---------|-------------|
+| `createUser(User user)` | Insert a new user |
+| `getUserById(int id)` | Retrieve a user by ID |
+| `getUserByEmail(String email)` | Retrieve a user by email |
+| `getUserByUsername(String username)` | Retrieve a user by username |
+| `updateUser(User user)` | Update user details |
+| `deleteUser(int id)` | Soft delete a user |
+| `getAllUsers()` | List all active users |
+| `authenticateUser(String username, String password)` | Authenticate a user |
+
+---
+
+# 📦 Sprint 1 Deliverables
+
+## Code
+
+- Complete JavaFX FXML UI
+- JavaFX controller implementation
+- Database schema and migration scripts
+- DAO implementation with CRUD operations
+- Database connection utility
+
+## Documentation
+
+- Database schema diagram
+- Setup instructions
+- User guide
+- DAO API documentation
+
+## Testing
+
+- Manual testing of all form validations
+- Database connection testing
+- Basic CRUD operation testing
+
+---
+
+# 🧪 Sprint 2: Unit Testing & Code Coverage (Weeks 3–4)
+
+## 🎯 Sprint Goal
+
+Implement comprehensive unit testing, achieve **80%+ code coverage**, and configure a Jenkins CI/CD pipeline.
+
+---
+
+# 🧬 Testing Implementation
+
+## Unit Testing with JUnit 5
+
+### Test Categories
+
+#### 1. Model Tests
+
+```java
+@ExtendWith(MockitoExtension.class)
+public class UserTest {
+
+    @Test
+    void testUserCreation_ValidData_Success() {
+
+        User user = new User(
+            "Doe",
+            "John",
+            "john@example.com",
+            "1234567890",
+            "johndoe",
+            "password"
+        );
+
+        assertNotNull(user);
+        assertEquals("Doe", user.getLastName());
+        assertEquals("John", user.getFirstName());
+        assertEquals("john@example.com", user.getEmail());
+    }
+}
+```
 java
 @ExtendWith(MockitoExtension.class)
 public class UserTest {
