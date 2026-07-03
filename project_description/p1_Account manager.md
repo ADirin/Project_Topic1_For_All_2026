@@ -42,46 +42,48 @@ Build a complete DevOps pipeline for a JavaFX FXML application with full CI/CD i
 | FXML | - | UI Layout |
 | MariaDB | 10.11 | Database |
 | Maven | 3.8.6 | Build Tool |
-📂 Project Structure
-text
+
+# 📂 Project Structure
+
+```text
 account-app/
 ├── pom.xml                                    # Maven configuration
 ├── README.md                                  # Project documentation
 ├── LICENSE                                    # License file
 │
-├── docs/                                      # Documentation
+├── docs/
 │   ├── architecture-diagram.png               # System architecture
 │   ├── user-guide.md                          # User guide
 │   └── deployment-guide.md                    # Deployment guide
 │
-├── src/                                       # Source code
+├── src/
 │   ├── main/
 │   │   ├── java/
 │   │   │   └── com/
 │   │   │       └── accountapp/
-│   │   │           ├── Main.java              # Application entry point
+│   │   │           ├── Main.java
 │   │   │           ├── controller/
 │   │   │           │   └── AccountController.java
 │   │   │           ├── model/
-│   │   │           │   ├── User.java          # User entity
+│   │   │           │   ├── User.java
 │   │   │           │   └── DatabaseConnection.java
-│   │   │           ├── dao/                   # Data Access Objects
+│   │   │           ├── dao/
 │   │   │           │   └── UserDAO.java
-│   │   │           ├── service/               # Business logic
+│   │   │           ├── service/
 │   │   │           │   └── ValidationService.java
-│   │   │           └── utils/                 # Utility classes
+│   │   │           └── utils/
 │   │   │               ├── PasswordHasher.java
 │   │   │               └── EmailValidator.java
 │   │   │
 │   │   └── resources/
 │   │       ├── fxml/
-│   │       │   └── account-view.fxml         # UI layout
+│   │       │   └── account-view.fxml
 │   │       ├── styles/
-│   │       │   └── application.css           # Styling
+│   │       │   └── application.css
 │   │       └── images/
-│   │           └── logo.png                  # Application logo
+│   │           └── logo.png
 │   │
-│   └── test/                                  # Test code
+│   └── test/
 │       ├── java/
 │       │   └── com/
 │       │       └── accountapp/
@@ -94,28 +96,30 @@ account-app/
 │       └── resources/
 │           └── test-database.properties
 │
-├── database/                                   # Database scripts
-│   ├── schema.sql                             # Schema definition
-│   └── data.sql                               # Test data
+├── database/
+│   ├── schema.sql
+│   └── data.sql
 │
-├── docker/                                     # Docker files
-│   ├── Dockerfile                             # Docker build file
-│   ├── docker-compose.yml                     # Orchestration
-│   ├── .dockerignore                          # Docker ignore
+├── docker/
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   ├── .dockerignore
 │   ├── mariadb/
-│   │   └── init.sql                           # Initialization script
+│   │   └── init.sql
 │   └── jenkins/
-│       └── Dockerfile                         # Jenkins container
+│       └── Dockerfile
 │
-├── jenkins/                                    # Jenkins configuration
-│   └── Jenkinsfile                            # Pipeline definition
+├── jenkins/
+│   └── Jenkinsfile
 │
-└── scripts/                                    # Utility scripts
-├── setup-db.sh                            # Database setup
-├── run-app.sh                             # Run application
-├── run-gui-windows.sh                     # Windows GUI launcher
-├── run-gui-linux.sh                       # Linux GUI launcher
-└── run-gui-mac.sh                         # Mac GUI launcher
+└── scripts/
+    ├── setup-db.sh
+    ├── run-app.sh
+    ├── run-gui-windows.sh
+    ├── run-gui-linux.sh
+    └── run-gui-mac.sh
+```
+
 🏗 Sprint 1: Database Implementation (Weeks 1-2)
 Sprint Goal
 Implement the core application with JavaFX FXML interface and MariaDB database integration.
