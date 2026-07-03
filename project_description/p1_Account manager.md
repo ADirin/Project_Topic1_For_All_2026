@@ -1,65 +1,47 @@
----
-title: Account App DevOps Project
-tags:
-java
-javafx
-fxml
-mariadb
-maven
-junit5
-mockito
-jacoco
-sonarqube
-jenkins
-docker
-docker-compose
-xming
-ci-cd
-devops
-documentation
----
-📋 Table of Contents
-Project Overview
-Technology Stack
-Project Structure
-Sprint 1: Database Implementation
-Sprint 2: Unit Testing & Coverage
-Sprint 3: Jenkins CI/CD
-Sprint 4: Docker & Xming
-Non-Functional Requirements
-Acceptance Criteria
-Learning Outcomes
-Grading
-Resources
+# 📋 Table of Contents
 
-📖 Project Overview
-Duration
-8 Weeks (4 Sprints, 2 Weeks Each)
-Goal
+- [Project Overview](#project-overview)
+- [Technology Stack](#technology-stack)
+- [Project Structure](#project-structure)
+- [Sprint 1: Database Implementation](#sprint-1-database-implementation)
+- [Sprint 2: Unit Testing & Code Coverage](#sprint-2-unit-testing--code-coverage)
+- [Sprint 3: Jenkins CI/CD](#sprint-3-jenkins-cicd)
+- [Sprint 4: Docker & Xming](#sprint-4-docker--xming)
+- [Non-Functional Requirements](#non-functional-requirements)
+- [Acceptance Criteria](#acceptance-criteria)
+- [Learning Outcomes](#learning-outcomes)
+- [Grading](#grading)
+- [Resources](#resources)
+
+---
+
+# 📖 Project Overview
+
+## Duration
+
+**8 Weeks** (4 Sprints, 2 Weeks Each)
+
+## Goal
+
 Build a complete DevOps pipeline for a JavaFX FXML application with full CI/CD integration, containerization, and GUI deployment.
-Team
-Size: 3-4 members per group
-🛠 Technology Stack
-Core Technologies
-Technology	Version	Purpose
-Java	17 LTS	Application Language
-JavaFX	17.0.2	UI Framework
-FXML	-	UI Layout
-MariaDB	10.11	Database
-Maven	3.8.6	Build Tool
-Testing & Quality
-Technology	Version	Purpose
-JUnit	5.9.2	Unit Testing
-Mockito	5.1.1	Mocking Framework
-JaCoCo	0.8.10	Code Coverage
-SonarQube	9.9	Code Quality
-DevOps Tools
-Technology	Version	Purpose
-Jenkins	2.426	CI/CD
-Docker	24.0	Containerization
-Docker Compose	2.20	Orchestration
-Xming	-	GUI Display
-Git	-	Version Control
+
+## Team
+
+**Size:** 3–4 members per group
+
+---
+
+# 🛠 Technology Stack
+
+## Core Technologies
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Java | 17 LTS | Application Language |
+| JavaFX | 17.0.2 | UI Framework |
+| FXML | - | UI Layout |
+| MariaDB | 10.11 | Database |
+| Maven | 3.8.6 | Build Tool |
 📂 Project Structure
 text
 account-app/
